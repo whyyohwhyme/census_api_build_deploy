@@ -47,4 +47,4 @@ jobs:
       uses: iterative/setup-dvc@v1
     - name: Pull the latest data
       run: |
-        dvc pull
+        dvc pull -r storage
