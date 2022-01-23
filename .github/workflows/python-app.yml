@@ -45,5 +45,6 @@ jobs:
         aws s3api list-buckets
     - name: Setup DVC
       uses: iterative/setup-dvc@v1
+    - name: Pull the latest data
       run: |
         dvc pull
