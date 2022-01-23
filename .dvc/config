@@ -1,2 +1,4 @@
+[core]
+    remote = storage
 ['remote "storage"']
     url = s3://udacity-mlops-project-data/dvcstore
