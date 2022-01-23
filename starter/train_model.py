@@ -1,5 +1,5 @@
 # Script to train machine learning model.
-
+import pickle 
 from sklearn.model_selection import train_test_split
 
 # Add the necessary imports for the starter code.
@@ -36,3 +36,10 @@ X_test, y_test, _, _ = process_data(
 model = train_model(X_train, y_train)
 preds = inference(model, X_test)
 print(compute_model_metrics(preds, y_test))
+with open('../model/model.pkl', 'wb') as f:
+    pickle.dump(data, f)
+print('saved model')
+
+with open('../model/onehotencoder.pkl', 'wb') as f:
+    pickle.dump(encoder, f)
+print('saved onehotencoder')
