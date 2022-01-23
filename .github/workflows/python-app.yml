@@ -43,3 +43,7 @@ jobs:
     - name: Test AWS Credentials
       run: |
         aws s3api list-buckets
+    - name: Setup DVC
+      uses: iterative/setup-dvc@v1
+      run: |
+        dvc pull
