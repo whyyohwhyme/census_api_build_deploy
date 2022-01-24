@@ -47,20 +47,31 @@ print("overall performance:")
 preds = inference(model, X_test)
 print(" ", compute_model_metrics(preds, y_test))
 
-feature_to_slice = 'workclass'
-#print(f'slicing across {feature_to_slice} ({X_train[feature_to_slice].nunique()} unique values)')
+results = []
+def slice_feature(feature_to_slice):
+    for feature_slice in test[feature_to_slice].unique():
+        slice_idx = test.loc[test[feature_to_slice]==feature_slice].index
+    
+        test_slice = test.loc[slice_idx]
+    
+        X_test_slice, y_test_slice, _, _ = process_data(
+            test_slice, categorical_features=cat_features, label="salary", training=False,
+            encoder=encoder, lb=lb
+        )
+    
+        slice_preds = inference(model, X_test_slice)
+        
+        metrics = compute_model_metrics(slice_preds, y_test_slice)
+        
+        results.append([feature_to_slice, feature_slice] + list(metrics))
+    
+        #print(f'slice: {feature_slice} : ({test_slice.shape[0]} obs) : {metrics}')
 
-for feature_slice in test[feature_to_slice].unique():
-    slice_idx = test.query(f'{feature_to_slice}=="{feature_slice}"').index
+for feature in cat_features:
+    print('slicing', feature)
+    slice_feature(feature)
 
-    test_slice = test.loc[slice_idx]
+results_df = pd.DataFrame(results)
+results_df.columns = ['feature','slice','precision','recall','f1beta']
+results_df.to_csv('slice_performance.txt',index=False)
 
-    X_test_slice, y_test_slice, _, _ = process_data(
-        test_slice, categorical_features=cat_features, label="salary", training=False,
-        encoder=encoder, lb=lb
-    )
-
-    slice_preds = inference(model, X_test_slice)
-
-    metrics = compute_model_metrics(slice_preds, y_test_slice)
-    print(f'slice: {feature_slice} : ({test_slice.shape[0]} obs) : {metrics}')
