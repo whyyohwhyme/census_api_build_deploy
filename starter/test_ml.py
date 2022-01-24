@@ -8,7 +8,7 @@ from sklearn.metrics import roc_auc_score
 
 @pytest.fixture()
 def dummy_predictions_actual():
-
+    """ Generate static predicions and actual values """
     actual = pd.Series([0,0,0,0,0,0,1,1,1,1,1,1])
     predic = pd.Series([0,0,0,1,1,1,0,0,1,1,1,1])
 
@@ -16,10 +16,14 @@ def dummy_predictions_actual():
 
 @pytest.fixture()
 def dummy_model_data():
+    """ Creates a simple classification dataset for model building"""
     X,y = make_classification() 
     return X,y
 
 def test_model_metrics(dummy_predictions_actual):
+    """ Tests to see if we get the correct metric values given 
+    a static prediction and actual array """
+
     actual, predic = dummy_predictions_actual
     prec, recall, fbeta = compute_model_metrics(actual, predic)
     assert round(prec,2)==0.57, f"precision is {prec}, should be 0.5"
@@ -27,6 +31,9 @@ def test_model_metrics(dummy_predictions_actual):
     assert round(fbeta,2)==0.62, f"fbeta is {fbeta}, should be 0"
 
 def test_model(dummy_model_data):
+    """Tests if the train model step works by passing in synthetic data and checking the outputs. 
+    We should see a reasonable AUC (>.60)
+    """
     X,y = dummy_model_data 
 
     train_X, test_X, train_y, test_y = train_test_split(X,y)
@@ -37,6 +44,8 @@ def test_model(dummy_model_data):
     assert auc > 0.6
 
 def test_inference(dummy_model_data):
+    """ Tests that the inference step produces values between 0 and 1 inclusive
+    """
     X,y = dummy_model_data
 
     train_X, test_X, train_y, test_y = train_test_split(X,y)
