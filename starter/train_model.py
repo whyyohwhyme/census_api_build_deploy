@@ -35,7 +35,7 @@ X_test, y_test, _, _ = process_data(
 # Train and save a model.
 model = train_model(X_train, y_train)
 with open('../model/model.pkl', 'wb') as f:
-    pickle.dump(data, f)
+    pickle.dump(model, f)
 print('saved model')
 
 with open('../model/onehotencoder.pkl', 'wb') as f:
