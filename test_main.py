@@ -19,7 +19,7 @@ pos_examples = [{'age': 55,
                  'capital-loss': 0,
                  'hours-per-week': 40,
                  'native-country': 'United-States',
-                 'salary': '>50K'}
+                 'salary': '>50K'},
 
                 {'age': 35,
                  'workclass': 'Private',
@@ -36,6 +36,7 @@ pos_examples = [{'age': 55,
                  'hours-per-week': 80,
                  'native-country': 'United-States',
                  'salary': '>50K'}]
+
 neg_examples = [{'age': 21,
                  'workclass': 'Private',
                  'fnlgt': 216181,
@@ -50,7 +51,7 @@ neg_examples = [{'age': 21,
                  'capital-loss': 0,
                  'hours-per-week': 35,
                  'native-country': 'United-States',
-                 'salary': '<=50K'}
+                 'salary': '<=50K'},
 
                 {'age': 42,
                  'workclass': 'Local-gov,'
