@@ -40,7 +40,7 @@ pos_examples = [{'age': 55,
 neg_examples = [{'age': 21,
                  'workclass': 'Private',
                  'fnlgt': 216181,
-                 'education': 'Some-college,'
+                 'education': 'Some-college',
                  'education-num': 10,
                  'marital-status': 'Never-married',
                  'occupation': 'Sales',
