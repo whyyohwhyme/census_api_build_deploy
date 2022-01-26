@@ -54,12 +54,12 @@ neg_examples = [{'age': 21,
                  'salary': '<=50K'},
 
                 {'age': 42,
-                 'workclass': 'Local-gov,'
+                 'workclass': 'Local-gov',
                  'fnlgt': 99554,
                  'education': 'Some-college',
                  'education-num': 10,
-                 'marital-status': 'Married-civ-spo,use'
-                 'occupation': 'Transpo,rt-moving'
+                 'marital-status': 'Married-civ-spouse',
+                 'occupation': 'Transport-moving',
                  'relationship': 'Husband',
                  'race': 'White',
                  'sex': 'Male',
