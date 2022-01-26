@@ -8,7 +8,7 @@ if "DYNO" in os.environ and os.path.isdir(".dvc"):
     os.system("rm -r .dvc .apt/usr/lib/dvc")
 
 from fastapi import FastAPI
-from pydantic import BaseModel 
+from pydantic import BaseModel
 from starter.ml.data import process_data
 from starter.ml.model import inference
 
@@ -32,19 +32,20 @@ cat_features = [
 
 app = FastAPI()
 
+
 class ScoringData(BaseModel):
-    age : int 
-    workclass : str
-    fnlgt : int
-    education : str
-    education_num : int
+    age: int
+    workclass: str
+    fnlgt: int
+    education: str
+    education_num: int
     marital_status: str
-    occupation : str
+    occupation: str
     relationship: str
-    race : str
-    sex : str
+    race: str
+    sex: str
     capital_gain: int
-    capital_loss:int
+    capital_loss: int
     hours_per_week: int
     native_country: str
 
@@ -55,12 +56,12 @@ class ScoringData(BaseModel):
                 "workclass": "State-gov",
                 "fnlgt": 77516,
                 "education": "Bachelors",
-                "education_num" : 13,
+                "education_num": 13,
                 "marital_status": "Never-married",
-                "occupation" : "Adm-clerical",
+                "occupation": "Adm-clerical",
                 "relationship": "Not-in-family",
-                "race" : "White",
-                "sex" : "Male",
+                "race": "White",
+                "sex": "Male",
                 "capital_gain": 2174,
                 "capital_loss": 0,
                 "hours_per_week": 0,
@@ -68,22 +69,24 @@ class ScoringData(BaseModel):
             }
         }
 
+
 @app.get("/")
 async def greeting():
-    return {"msg":"Welcome to the census predictor"}
+    return {"msg": "Welcome to the census predictor"}
+
 
 @app.post("/score")
 async def score(sd: ScoringData):
     df = pd.DataFrame(sd, columns=['0', '1'])\
-            .set_index('0').T\
-            .assign(salary='dummy')
+        .set_index('0').T\
+        .assign(salary='dummy')
 
-    df.columns = [k.replace("_","-") for k in df.columns]
+    df.columns = [k.replace("_", "-") for k in df.columns]
 
     X_test, _, _, _ = process_data(
-    df, categorical_features=cat_features, label="salary", training=False,
-    encoder=encoder, lb=None)
+        df, categorical_features=cat_features, label="salary", training=False,
+        encoder=encoder, lb=None)
 
     pred = ">50K" if int(inference(model, X_test)) == 1 else "<=50K"
 
-    return {'prediction':pred}
+    return {'prediction': pred}
