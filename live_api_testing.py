@@ -12,11 +12,10 @@ print(f'testing using endpoint: {endpoint}')
 
 
 def test_example(example_data):
-    example_refmt = {k.replace('-', '_'): v for k, v in example_data.items()}
-    response = requests.post(endpoint, json=example_refmt)
+    response = requests.post(endpoint, json=example_data)
     msg = (f'api result: {response.status_code} '
            f'prediction: {response.json()} '
-           f'expected: {example_refmt["salary"]}')
+           f'expected: {example_data["salary"]}')
     print(msg)
 
 

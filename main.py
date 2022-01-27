@@ -7,7 +7,7 @@ if "DYNO" in os.environ and os.path.isdir(".dvc"):
         exit("dvc pull failed")
     os.system("rm -r .dvc .apt/usr/lib/dvc")
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Query
 from pydantic import BaseModel
 from starter.ml.data import process_data
 from starter.ml.model import inference
@@ -38,16 +38,16 @@ class ScoringData(BaseModel):
     workclass: str
     fnlgt: int
     education: str
-    education_num: int
-    marital_status: str
+    education_num: int = Query(None, alias='education-num')
+    marital_status: str = Query(None, alias='marital-status')
     occupation: str
     relationship: str
     race: str
     sex: str
-    capital_gain: int
-    capital_loss: int
-    hours_per_week: int
-    native_country: str
+    capital_gain: int = Query(None, alias='capital-gain')
+    capital_loss: int = Query(None, alias='capital-loss')
+    hours_per_week: int = Query(None, alias='hours-per-week')
+    native_country: str = Query(None, alias='native-country')
 
     class Config:
         schema_extra = {
@@ -56,16 +56,16 @@ class ScoringData(BaseModel):
                 "workclass": "State-gov",
                 "fnlgt": 77516,
                 "education": "Bachelors",
-                "education_num": 13,
-                "marital_status": "Never-married",
+                "education-num": 13,
+                "marital-status": "Never-married",
                 "occupation": "Adm-clerical",
                 "relationship": "Not-in-family",
                 "race": "White",
                 "sex": "Male",
-                "capital_gain": 2174,
-                "capital_loss": 0,
-                "hours_per_week": 0,
-                "native_country": "United-States",
+                "capital-gain": 2174,
+                "capital-loss": 0,
+                "hours-per-week": 0,
+                "native-country": "United-States",
             }
         }
 

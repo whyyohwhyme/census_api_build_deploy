@@ -78,23 +78,13 @@ def test_greeting():
 
 def test_pos_outcome():
     for neg_example in neg_examples:
-        example_refmt = {
-            k.replace(
-                '-',
-                '_'): v for k,
-            v in neg_example.items()}
-        response = client.post("/score", json=example_refmt)
+        response = client.post("/score", json=neg_example)
         assert response.status_code == 200
-        assert response.json()['prediction'] == example_refmt['salary']
+        assert response.json()['prediction'] == neg_example['salary']
 
 
 def test_neg_outcome():
     for pos_example in pos_examples:
-        example_refmt = {
-            k.replace(
-                '-',
-                '_'): v for k,
-            v in pos_example.items()}
-        response = client.post("/score", json=example_refmt)
+        response = client.post("/score", json=pos_example)
         assert response.status_code == 200
-        assert response.json()['prediction'] == example_refmt['salary']
+        assert response.json()['prediction'] == pos_example['salary']
